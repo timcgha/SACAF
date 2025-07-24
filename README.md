@@ -1,22 +1,24 @@
 # SACAF
 
 Simple AI Cybersecurity Assessment Framework (SACAF) Introduction
-Welcome to SACAF
+<br><br>**Welcome to SACAF**
 
-SACAF is a free, easy-to-use checklist tool designed to help companies quickly check their AI security. It focuses on key risks like data leaks, system tampering, and downtime from attacks. With just 30 simple questions, you can get a clear picture of your AI cybersecurity maturity in about 20-30 minutes. No experts needed—answer on a 0-3 scale, and see your scores right away.
+SACAF is a free, easy-to-use checklist tool designed to help companies quickly check their AI security. It focuses on key risks like data leaks, system tampering, and downtime from attacks. 
 
-Benefits
+By keeping it to 30 simple questions, you can get a clear picture of your AI cybersecurity maturity in about 20-30 minutes. No experts needed. Answer on a 0-3 scale, and see your scores right away.
 
-Fast Assessment: Spot AI risks in under 30 minutes with straightforward yes/no-style questions.
+**Benefits**
+1. Fast Assessment: Spot AI risks in under 30 minutes with the straightforward yes/no-style questions.
 
-Actionable Scores: Get a 360-degree view of strengths and gaps, with category averages and an overall maturity level to guide fixes.
+2. Actionable Scores: Get a 360-degree view of strengths and gaps, with category averages and an overall maturity level to guide fixes.
 
-Cyber-Focused: Covers attacks on data privacy (confidentiality), tampering (integrity), and uptime (availability) for AI like chatbots or office tools.
+3. Cyber-Focused: Covers attacks on data privacy (confidentiality), tampering (integrity), and uptime (availability) for AI like chatbots or office tools.
 
-Beginner-Friendly: Simple wording, explanations in parentheses, and a rubric to make scoring easy.
+4. Beginner-Friendly: Simple wording, explanations in parentheses, and a rubric to make scoring easy.
 
-Free and Shareable: Use it quarterly to track progress and share results with your team or leaders.
-How It Works
+5. Free and Shareable: Use it quarterly to track progress and share results with your team or leaders.
+
+**How It Works**
 
 Answer each question on a 0-3 scale:
 
@@ -30,7 +32,7 @@ Answer each question on a 0-3 scale:
 
 Group scores by category (e.g., Data Security) for targeted insights. Aim for 3s in high-risk areas marked with ★.
 
-Disclaimers
+**Disclaimers**
 
 This tool provides a high-level self-assessment and is not a substitute for professional audits, penetration tests, or expert advice.
 

@@ -30,7 +30,7 @@ Answer each question on a 0-3 scale:
 
 3: Fully implemented and verified org-wide
 
-Group scores by category (e.g., Data Security) for targeted insights. Aim for 3s in high-risk areas marked with ★.
+Group scores by category (e.g., Data Security) for targeted insights. Aim for 3s in high risk areas marked with ★.
 
 **Disclaimers**
 

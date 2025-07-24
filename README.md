@@ -36,10 +36,11 @@ Group scores by category (e.g., Data Security) for targeted insights. Aim for 3s
 
 This tool provides a high-level self-assessment and is not a substitute for professional audits, penetration tests, or expert advice.
 
-Results depend on honest answers and may not catch all risks—use it as a starting point, not a full security guarantee.
+Results depend on honest answers and may not catch all risks. Use it as a starting point, not a full security guarantee.
 
-SACAF is for informational purposes only; no liability for decisions based on it.
-Feedback and Contact
+SACAF is for informational purposes only. No liability for decisions based on it.
+
+**Feedback and Contact**
 
 We’d love your input to improve SACAF! Share thoughts or suggestions at bulrush.harp.2t@icloud.com or via https://www.linkedin.com/in/logansimpson-cybersecurity
 

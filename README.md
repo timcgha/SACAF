@@ -42,6 +42,8 @@ SACAF is for informational purposes only. No liability for decisions based on it
 
 **Feedback and Contact**
 
-We’d love your input to improve SACAF! Share thoughts or suggestions at bulrush.harp.2t@icloud.com or via https://www.linkedin.com/in/logansimpson-cybersecurity
+We’d love your input to improve SACAF! Share thoughts or suggestions at:
+1. bulrush.harp.2t@icloud.com or via
+2. https://www.linkedin.com/in/logansimpson-cybersecurity
 
 Created by Logan Simpson, July 2025. Free to use and share under Creative Commons.

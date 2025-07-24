@@ -8,13 +8,13 @@ SACAF is a free, easy-to-use checklist tool designed to help companies quickly c
 By keeping it to 30 simple questions, you can get a clear picture of your AI cybersecurity maturity in about 20-30 minutes. No experts needed. Answer on a 0-3 scale, and see your scores right away.
 
 **Benefits**
-1. Fast Assessment: Spot AI risks in under 30 minutes with the straightforward yes/no-style questions.
+1. Fast Assessment: Spot AI risks in under 30 minutes with the straightforward yes/no questions.
 
 2. Actionable Scores: Get a 360-degree view of strengths and gaps, with category averages and an overall maturity level to guide fixes.
 
-3. Cyber-Focused: Covers attacks on data privacy (confidentiality), tampering (integrity), and uptime (availability) for AI like chatbots or office tools.
+3. Cyber Focused: Covers attacks on data privacy (confidentiality), tampering (integrity), and uptime (availability) for AI like chatbots or office tools.
 
-4. Beginner-Friendly: Simple wording, explanations in parentheses, and a rubric to make scoring easy.
+4. Beginner Friendly: Simple wording, explanations in parentheses, and a rubric to make scoring easy.
 
 5. Free and Shareable: Use it quarterly to track progress and share results with your team or leaders.
 

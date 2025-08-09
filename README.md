@@ -10,7 +10,7 @@ By keeping it to 30 simple questions, you can get a clear picture of your AI cyb
 **Benefits**
 1. Fast Assessment: Spot AI risks in under 30 minutes with the straightforward yes/no questions.
 
-2. Actionable Scores: Get a 360-degree view of strengths and gaps, with category averages and an overall maturity level to guide fixes.
+2. Actionable Scores: Get a 360 degree view of strengths and gaps, with category averages and an overall maturity level to guide fixes.
 
 3. Cyber Focused: Covers attacks on data privacy (confidentiality), tampering (integrity), and uptime (availability) for AI like chatbots or office tools.
 
@@ -26,15 +26,15 @@ Answer each question on a 0-3 scale:
 
 1: Planned or in early discussion
 
-2: Partially implemented, not consistent or org-wide
+2: Partially implemented, not consistent or org wide
 
-3: Fully implemented and verified org-wide
+3: Fully implemented and verified org wide
 
 Group scores by category (e.g., Data Security) for targeted insights. Aim for 3s in high risk areas marked with ★.
 
 **Disclaimers**
 
-This tool provides a high-level self-assessment and is not a substitute for professional audits, penetration tests, or expert advice.
+This tool provides a high level self-assessment and is not a substitute for professional audits, penetration tests, or expert advice.
 
 Results depend on honest answers and may not catch all risks. Use it as a starting point, not a full security guarantee.
 
@@ -42,8 +42,21 @@ SACAF is for informational purposes only. No liability for decisions based on it
 
 **Feedback and Contact**
 
-We’d love your input to improve SACAF! Share thoughts or suggestions at:
+Have feedback? Share thoughts or suggestions at:
 1. bulrush.harp.2t@icloud.com or via
 2. https://www.linkedin.com/in/logansimpson-cybersecurity
 
 Created by Logan Simpson, July 2025. Free to use and share under Creative Commons.
+
+**References for the model**
+- NIST AI Risk Management Framework
+- Google Secure AI Framework
+- ENISA Framework for AI Security
+- OWASP Top 10 for LLMs
+- Apriorit: How to build secure chatbot
+- Mitre Adversary Threat Landscap
+- Microsoft Responsible AI Standard
+- ISO 42001
+- US CISA AI Security Playbook
+- Secure Practices for AI Dev
+  

@@ -253,12 +253,30 @@ h3,
 }
 
 .side-nav button {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.45rem;
+  width: 100%;
   text-align: left;
   border: 0;
   background: transparent;
   border-radius: 10px;
   padding: 0.55rem 0.7rem;
   color: var(--ink-soft);
+}
+
+.side-nav .nav-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.side-nav .nav-check {
+  flex: none;
+  color: var(--teal-bright);
+  font-weight: 700;
 }
 
 .side-nav button[aria-current="true"] {
@@ -457,6 +475,7 @@ h3,
 @media (min-width: 800px) {
   .scoreboard {
     grid-template-columns: 1.2fr 1fr;
+    align-items: start;
   }
 }
 

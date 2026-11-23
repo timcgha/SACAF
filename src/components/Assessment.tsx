@@ -56,8 +56,10 @@ export function Assessment({
                   aria-current={i === index ? "true" : undefined}
                   onClick={() => onIndexChange(i)}
                 >
-                  {q.id}. {shortCategory(q)}
-                  {scored ? " ✓" : ""}
+                  <span className="nav-label">
+                    {q.id}. {shortCategory(q)}
+                  </span>
+                  {scored ? <span className="nav-check" aria-label="Answered">✓</span> : null}
                 </button>
               );
             })}
@@ -148,6 +150,11 @@ export function Assessment({
                   type="button"
                   className="primary-btn"
                   disabled={!complete}
+                  title={
+                    complete
+                      ? "Open your SACAF report"
+                      : `Answer all ${questions.length} questions to generate the report (${done} done)`
+                  }
                   onClick={onOpenReport}
                 >
                   Generate report

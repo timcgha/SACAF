@@ -45,6 +45,10 @@ export default function App() {
     saveAnswers(answers);
   }, [answers]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [view]);
+
   const progressCount = useMemo(
     () => answeredCount(data.questions, answers),
     [answers],

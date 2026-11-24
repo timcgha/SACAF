@@ -1,62 +1,57 @@
 # SACAF
 
-Simple AI Cybersecurity Assessment Framework (SACAF) Introduction
-<br><br>**Welcome to SACAF**
+**Simple AI Cybersecurity Assessment Framework** — a free checklist to gauge AI security maturity in about 20–30 minutes.
 
-SACAF is a free, easy-to-use checklist tool designed to help companies quickly check their AI security. It focuses on key risks like data leaks, system tampering, and downtime from attacks. 
+## Web app
 
-By keeping it to 30 simple questions, you can get a clear picture of your AI cybersecurity maturity in about 20-30 minutes. No experts needed. Answer on a 0-3 scale, and see your scores right away.
+This repository includes a browser version of the Beta 0.6 assessment spreadsheet.
 
-**Benefits**
-1. Fast Assessment: Spot AI risks in under 30 minutes with the straightforward yes/no questions.
+```bash
+npm install
+npm run dev
+```
 
-2. Actionable Scores: Get a 360 degree view of strengths and gaps, with category averages and an overall maturity level to guide fixes.
+Then open the local URL Vite prints (usually `http://localhost:5173`).
 
-3. Cyber Focused: Covers attacks on data privacy (confidentiality), tampering (integrity), and uptime (availability) for AI like chatbots or office tools.
+- Answer all 30 questions on a **0–3** scale
+- Optional org notes per question
+- Progress is saved in your browser (`localStorage`)
+- Generate a report with overall / tier / category scores and recommendations for anything scored below 3
+- Print or save as PDF from the report view
 
-4. Beginner Friendly: Simple wording, explanations in parentheses, and a rubric to make scoring easy.
+```bash
+npm run build    # production build → dist/
+npm run preview  # preview the production build
+```
 
-5. Free and Shareable: Use it quarterly to track progress and share results with your team or leaders.
+## Scoring
 
-**How It Works**
+| Score | Meaning |
+|------:|---------|
+| 0 | Not implemented or unknown |
+| 1 | Planned or in early discussion |
+| 2 | Partially implemented, not consistent or org-wide |
+| 3 | Fully implemented and verified org-wide |
 
-Answer each question on a 0-3 scale:
+Maturity bands (overall and per tier):
 
-0: Not implemented or unknown
+- **Initial** — under 1.5
+- **Developing** — 1.5 to under 2.5
+- **Optimized** — 2.5 to 3.0
 
-1: Planned or in early discussion
+Overall score is the average of the three tier averages (Foundational, Operational, Advanced).
 
-2: Partially implemented, not consistent or org wide
+## Spreadsheet
 
-3: Fully implemented and verified org wide
+`SACAF_Assessment_Beta_0.6.xlsx` remains the original workbook source for questions, recommendations, and rubric text.
 
-Group scores by category (e.g., Data Security) for targeted insights. Aim for 3s in high risk areas marked with ★.
+## Disclaimers
 
-**Disclaimers**
+This tool is a high-level self-assessment, not a substitute for professional audits, penetration tests, or expert advice. Results depend on honest answers. Informational use only.
 
-This tool provides a high level self-assessment and is not a substitute for professional audits, penetration tests, or expert advice.
+## Feedback
 
-Results depend on honest answers and may not catch all risks. Use it as a starting point, not a full security guarantee.
+- bulrush.harp.2t@icloud.com
+- https://www.linkedin.com/in/logansimpson-cybersecurity
 
-SACAF is for informational purposes only. No liability for decisions based on it.
-
-**Feedback and Contact**
-
-Have feedback? Share thoughts or suggestions at:
-1. bulrush.harp.2t@icloud.com or via
-2. https://www.linkedin.com/in/logansimpson-cybersecurity
-
-Created by Logan Simpson, July 2025. Free to use and share under Creative Commons.
-
-**References for the model**
-- NIST AI Risk Management Framework
-- Google Secure AI Framework
-- ENISA Framework for AI Security
-- OWASP Top 10 for LLMs
-- Apriorit: How to build secure chatbot
-- Mitre Adversary Threat Landscap
-- Microsoft Responsible AI Standard
-- ISO 42001
-- US CISA AI Security Playbook
-- Secure Practices for AI Dev
-  
+Created by Logan Simpson, July 2025. Free to use under the MIT License / Creative Commons intent described in the original materials.

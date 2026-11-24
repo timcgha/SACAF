@@ -1,0 +1,289 @@
+{
+  "title": "Simple AI Cybersecurity Assessment Framework (SACAF)",
+  "version": "0.6",
+  "scoreLabels": {
+    "0": "Not implemented or unknown",
+    "1": "Planned or in early discussion",
+    "2": "Partially implemented, not consistent or org-wide",
+    "3": "Fully implemented and verified org-wide"
+  },
+  "maturityLevels": {
+    "initial": {
+      "min": 0,
+      "max": 1.4,
+      "label": "Initial",
+      "description": "Your assessment has placed your organization at the Initial maturity stage. \n\nThe result indicates your organization is at the beginning of its AI security journey.  \n\nThis stage is common for companies that are either new to adopting AI or new to recognizing the security risks of AI. \n\nYour immediate goal is to use this report as a roadmap to establish core defenses and move towards a more mature state. \n\nIt is recommended to carefully review the detailed recommendations provided. \n\nPrioritize closing gaps identified in the foundational categories."
+    },
+    "developing": {
+      "min": 1.5,
+      "max": 2.4,
+      "label": "Developing",
+      "description": "Your assessment has placed your organization at the Developing maturity stage. \n\nThis result indicates your organization has begun implementing AI security measures, but they may be inconsistent or not fully integrated across the company. \n\nWhile some basic protections are in place, there are still notable gaps that could expose your AI systems to risks. \n\nYour next steps should focus on expanding and standardizing these practices organization-wide.\n \nReview the report for targeted recommendations to build on your current foundation and address key vulnerabilities."
+    },
+    "optimized": {
+      "min": 2.5,
+      "max": 3.0,
+      "label": "Optimized",
+      "description": "Your assessment has placed your organization at the Optimized maturity stage. \n\nThis result indicates your organization has achieved a high level of AI security excellence, with comprehensive, verified, and proactive measures across all areas. \n\nYour systems are resilient against both current and emerging threats, setting a strong example for the industry. \n\nTo sustain this position, focus on innovation in security practices and ongoing training."
+    }
+  },
+  "tierDescriptions": {
+    "Foundational": {
+      "initial": "From a Foundational perspective, the basics of AI security governance and data protection are largely absent or unknown in your organization. \n\nAt this stage, there's high risk of regulatory non-compliance, data breaches, and inconsistent AI usage. \n\nFocus on establishing core policies, inventorying systems, and implementing basic data protection measures like encryption and minimization to build a secure foundation.",
+      "developing": "From a Foundational perspective, some basic AI security measures are in place but inconsistently applied or not organization-wide. \n\nWhile initial steps like policy drafting or basic encryption may be started, gaps in risk assessment, compliance audits, or data sanitization could still expose your organization to leaks or biases. \n\nBuild consistency by expanding these practices, forming review teams, and conducting threat modeling.",
+      "optimized": "From a Foundational perspective, you have excellence in AI governance and data protection, with comprehensive, verified measures like full encryption, thorough audits, and advanced privacy tech fully integrated. \n\nYour organization sets a strong standard for basic security, minimizing risks from leaks or biases."
+    },
+    "Operational": {
+      "initial": "From an Operational perspective, your core AI operations like model security, deployment controls, and inference safety are largely unimplemented or unknown. \n\nAt this stage, your organization is highly vulnerable to attacks such as model tampering, unauthorized access, or unsafe outputs. \n\nFocus on basic operational safeguards like testing models for vulnerabilities, securing coding practices, and establishing guardrails to prevent misuse.",
+      "developing": "From an Operational perspective, some core AI operational measures are in place but applied inconsistently or not across the organization. \n\nWhile initial steps like basic input validation or sandboxing may be started, gaps in supply chain vetting, prompt protection, or output moderation could still lead to exploitation or errors. \n\nStrengthen consistency by expanding these practices, limiting agent capabilities, and hardening deployments.",
+      "optimized": "From an Operational perspective, you have strong, consistent AI operational security with comprehensive testing, secure deployments, and effective inference controls. \n\nYour organization is well-protected against threats like adversarial attacks or goal drift, with opportunities for fine-tuning in areas like multilingual safety. \n\nTo maintain this, focus on ongoing optimization and innovation."
+    },
+    "Advanced": {
+      "initial": "For the Advanced controls, ongoing monitoring, incident response, and scaling capabilities for complex AI systems are largely unimplemented or unknown. \n\nAt this stage, your organization is vulnerable to undetected threats, prolonged incidents, and issues in multi-agent setups. \n\nFocus on basic advanced safeguards like real-time logging, incident planning, and rogue detection to enable safe scaling.",
+      "developing": "For the Advanced controls, some advanced AI measures are in place but applied inconsistently or not across the organization. \n\nWhile initial steps like basic alerts or communication security may be started, gaps in audits, anomaly detection, or agent isolation could hinder threat response and scaling. \n\nStrengthen consistency by expanding these practices, automating alerts, and securing inter-agent flows.",
+      "optimized": "For the Advanced controls, you have strong, consistent AI monitoring and scaling security with comprehensive audits, real-time detection, and effective multi-agent controls. \n\nYour organization is well-protected against advanced threats like rogue behaviors or poisoning, with opportunities for fine-tuning in areas like automated isolation. \n\nTo maintain this, focus on ongoing innovation and drills."
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "tier": "Foundational",
+      "category": "Governance and Risk Assessment",
+      "question": "Do you have a written \"Acceptable Use Policy\" specific for AI?",
+      "recommendation": "1. Develop a Comprehensive Policy: The AUP should go beyond basic rules and clearly define what types of data (e.g., Public, Internal, Confidential) can be used with which types of AI tools, specify ownership of AI-generated content, and outline security requirements for using AI services.\n\n2. Integrate and Train: The policy must be integrated into mandatory employee onboarding and annual security training. All employees should be required to formally acknowledge that they have read and understood the AUP.\n\n3. Enforce and Review: The policy should be a key part of the AI tool approval process. It must also be reviewed and updated on a regular schedule (e.g., annually) to adapt to new technologies, threats, and regulations.",
+      "impact": "Without a clear policy, employees may inadvertently leak sensitive company data, violate copyrights, and expose the organization to significant legal and reputational damage."
+    },
+    {
+      "id": 2,
+      "tier": "Foundational",
+      "category": "Governance and Risk Assessment",
+      "question": "Have you created a list of the AI tools being used across your organization (e.g. name, department, purpose)?",
+      "recommendation": "1. Enrich the Inventory: The list should be expanded beyond the basics to include an owner for each tool, a data classification for the information it processes (e.g., Public, Confidential), and a link to its risk assessment.\n\n2. Integrate with Other Processes: The inventory should be integrated with your IT and security systems. For example, it should be a key input for your risk management program and your incident response plan, so you know exactly what tools are in use when a security event occurs.",
+      "impact": "Without an inventory, the organization is blind to \"Shadow AI,\" where employees use unvetted and insecure tools that create significant, unmanaged security and compliance risks."
+    },
+    {
+      "id": 3,
+      "tier": "Foundational",
+      "category": "Governance and Risk Assessment",
+      "question": "Is there a designated person or role for approving new AI tools?",
+      "recommendation": "1. Formalize and Communicate the Role: The person or role (e.g., \"CISO\" or \"Head of IT\") must be formally documented as the AI Tool Approver in a relevant policy or responsibility matrix. This designation should be clearly communicated so that everyone in the organization knows who the single point of contact is.\n\n2. Establish a Documented Process: The approver should use a simple but documented intake process. This could be a standard request form or email template that requires employees to provide basic information, such as the tool's name, its business purpose, and the type of data that will be used with it.\n\n3. Define Clear Approval Criteria: The designated person should make decisions based on a simple, written checklist of foundational criteria. This ensures decisions are consistent and risk-based, covering basics like the tool's privacy policy, its intended use, and whether it duplicates an existing, approved solution.",
+      "impact": "Without a designated approver, the adoption of AI tools will be inconsistent and chaotic, leading to the use of insecure or non-compliant software that introduces unmanaged risks."
+    },
+    {
+      "id": 4,
+      "tier": "Foundational",
+      "category": "Governance and Risk Assessment",
+      "question": "Have you listed out what a malicious user could do with your AI tools?",
+      "recommendation": "1. Make it a Required Step: The process of listing potential misuses should be a documented and mandatory part of the intake form for approving any new AI tool.\n\n2. Ensure Comprehensive Coverage: The exercise must be completed and documented for all approved, business-critical AI tools in the inventory, not just a single application.\n\n3. Involve Diverse Perspectives: The list of potential misuses should be created with input from not just the security team, but also the business users who best understand how the tool will be used in practice.",
+      "impact": "Without considering potential misuses, an organization will be blind to predictable attacks and fail to implement even the most basic and necessary security safeguards."
+    },
+    {
+      "id": 5,
+      "tier": "Foundational",
+      "category": "Governance and Risk Assessment",
+      "question": "For each AI system, do you identify its origin (e.g. Commercial SaaS, Open-source, or In-house developed)?",
+      "recommendation": "1. Enrich the Inventory Data: The origin information in the AI inventory should be detailed and specific. For example, an \"Open-source\" tool should list the model name and source (e.g., \"Llama 3 from Hugging Face\"), and a \"Commercial SaaS\" tool should list the specific vendor and product.\n\n2. Link Origin to a Risk Profile: The documented origin should be used to assign a basic, default risk level to each tool. For example, a policy might state that all unvetted open-source models are considered \"high risk\" by default, which then triggers a more detailed review.\n\n3. Integrate into the Approval Process: The requirement to identify and document a tool's origin must be a mandatory, non-negotiable step in the formal AI tool approval workflow.",
+      "impact": "Without identifying the origin of AI systems, an organization is blind to critical supply chain risks such as inherited vulnerabilities, restrictive licensing, and unsafe vendor practices."
+    },
+    {
+      "id": 6,
+      "tier": "Foundational",
+      "category": "Data Security and Privacy",
+      "question": "Do you minimize data collection (e.g., chatbots only ask for needed info)?",
+      "recommendation": "1. Formalize the Policy: The principle of \"collecting only what is necessary\" must be explicitly defined in the organization's AI Acceptable Use Policy or a broader Data Governance Policy.\n\n2. Integrate into the Approval Process: A mandatory \"Data Minimization Assessment\" must be part of the intake form for any new AI tool or project. Project owners are required to list every data point they intend to collect.\n\n3. Require Justification and Approval: For each data point listed, the project owner must provide a clear written justification for why it is essential. This assessment must be formally reviewed and signed off on by the designated AI approver before the project is allowed to begin.",
+      "impact": "Failing to minimize data collection unnecessarily expands the organization's attack surface and dramatically increases the financial and reputational damage of a data breach."
+    },
+    {
+      "id": 7,
+      "tier": "Foundational",
+      "category": "Data Security and Privacy",
+      "question": "Is all data encrypted in transit (during transfer) and at rest (when stored)?",
+      "recommendation": "1. Update Policies for AI Assets: The data classification and security policies must be updated to explicitly classify AI model files and training datasets as highly sensitive assets that require strong encryption at rest.\n\n2. Integrate into MLOps: The requirement to encrypt these assets must be a mandatory, automated checkpoint within the MLOps (Machine Learning Operations) pipeline before a model can be deployed.\n\n3. Mandate for API Endpoints: The policy must require that all API endpoints serving AI models, whether internal or external, enforce modern, encrypted connections (e.g., TLS 1.2+).",
+      "impact": "Without encryption, an attacker could steal your proprietary AI models and the massive datasets used to train them, leading to catastrophic intellectual property theft on top of a major data breach."
+    },
+    {
+      "id": 8,
+      "tier": "Foundational",
+      "category": "Data Security and Privacy",
+      "question": "Do you prevent the use of real customer data for software testing or to train AI models?",
+      "recommendation": "1. Formalize the Prohibition: The rule against using real customer data in all non-production environments (including for AI training, development, and testing) must be explicitly documented in a formal, easily accessible policy.\n\n2. Provide a Safe Alternative: The organization must provide and support a viable, approved alternative to using production data. This could be a script to generate synthetic (fake) data or a pre-sanitized, anonymized version of the database.\n\n3. Enforce via Process: Compliance must be enforced by making it a mandatory checkpoint in the development lifecycle. Before starting a project, teams must formally confirm they are using the approved, non-sensitive data sources.",
+      "impact": "Using real customer data in less secure training and testing environments is a primary cause of major data breaches and can lead to AI models memorizing and leaking private information."
+    },
+    {
+      "id": 9,
+      "tier": "Foundational",
+      "category": "Data Security and Privacy",
+      "question": "Have you performed a gap analysis to see where your AI practices fall short of your data privacy law requirements?",
+      "recommendation": "1. Obtain Legal Counsel: The list of applicable laws (e.g., PDPL for Saudi operations, GDPR for European customers) is formally reviewed and signed off on by qualified legal counsel.\n\n2. Map Laws to Business Units: The organization documents which parts of the business are affected by which laws (e.g., \"Our marketing analytics AI must comply with GDPR consent rules\").\n\n3. Communicate Obligations: The key legal obligations are clearly communicated to all relevant teams, especially product and engineering, so they are aware of the rules from the start.",
+      "impact": "Without identifying applicable data privacy laws, an organization will inevitably and "
+    },
+    {
+      "id": 10,
+      "tier": "Foundational",
+      "category": "Data Security and Privacy",
+      "question": "Do you sanitize training data to prevent poisoning (malicious data insertion)?",
+      "recommendation": "1. Automate the Sanitization Pipeline: The sanitization process should be a fully automated, mandatory step in your MLOps data ingestion pipeline that all data must pass through before being used for training.\n\n2. Use Multi-Layered Filtering: The pipeline should use multiple techniques to detect malicious data, including statistical anomaly detection to find outliers and heuristic filters to block known-bad patterns or toxic content.\n\n3. Continuously Monitor and Tune: The effectiveness of the sanitization filters must be continuously monitored, and the rules should be regularly updated to adapt to new and evolving attack methods.",
+      "impact": "Without sanitizing training data, an attacker can intentionally \"poison\" a model, secretly corrupting its behavior to create backdoors, introduce biases, or cause it to fail in critical situations."
+    },
+    {
+      "id": 11,
+      "tier": "Foundational",
+      "category": "Data Security and Privacy",
+      "question": "Do you restrict access to raw data to only those who need it and instead provide analysts with aggregated or summarized data?",
+      "recommendation": "1. Formalize the \"Need-to-Know\" Policy: There must be a documented Data Access Policy that explicitly states access to raw data is forbidden by default and is only granted to specific roles with a proven, documented business justification.\n\n2. Establish a Formal Access Request Process: Implement a formal, auditable workflow for requesting and approving access to raw data. The process must require justification from the user and approval from a designated data owner.\n\n3. Provide and Promote Aggregated Data: Actively create and maintain secure, pre-aggregated data sources (like data marts or summary tables) and make them the default, easy-to-access option for all analysts and business intelligence tools.",
+      "impact": "Without restricting access, a single compromised employee account can expose all raw sensitive data, dramatically increasing the impact of a breach and violating data privacy principles."
+    },
+    {
+      "id": 12,
+      "tier": "Operational",
+      "category": "Model Security and Integrity",
+      "question": "Do you test AI models for vulnerabilities like adversarial testing (tricking the model)?",
+      "recommendation": "1. Integrate Testing into MLOps: Adversarial testing shouldn't be a one-time event before launch. It must be an automated, mandatory step within the MLOps pipeline that is triggered by any major update to the model or its training data.\n\n2. Use a Comprehensive Attack Framework: The tests must be based on a formal threat model and cover a wide range of known attack techniques (e.g., evasion, poisoning, privacy extraction) using established frameworks like the MITRE ATLAS™ (Adversarial Threat Landscape for Artificial-Intelligence Systems).\n\n3. Create a Feedback Loop for Remediation: The vulnerabilities discovered during testing must be formally tracked, prioritized, and fed back to the data science and engineering teams to harden the model through specific defenses, such as defensive distillation or adversarial retraining.",
+      "impact": "Without adversarial testing, a model that appears accurate can be easily tricked by a determined attacker, leading to critical failures like misclassifying threats, approving fraudulent transactions, or bypassing safety filters."
+    },
+    {
+      "id": 13,
+      "tier": "Operational",
+      "category": "Model Security and Integrity",
+      "question": "Are models built with secure coding like input validation (checking user data)?",
+      "recommendation": "1. Establish Formal Standards: The organization must have a documented secure coding standard that explicitly requires practices like input validation, sanitization, and error handling for all code that processes data for AI systems.\n\n2. Provide AI-Specific Training: All developers and data scientists must complete mandatory training on these secure coding standards, with specific examples of how vulnerabilities like injection attacks can manifest in AI/ML applications.\n\n3. Integrate into the Development Lifecycle: Adherence to these standards must be a formal requirement and a review checkpoint in the organization's Software Development Lifecycle (SDLC) for any new AI project.",
+      "impact": "Without secure coding practices like input validation, the application is vulnerable to classic web attacks that can lead to system crashes, data corruption, or a full server compromise."
+    },
+    {
+      "id": 14,
+      "tier": "Operational",
+      "category": "Model Security and Integrity",
+      "question": "Do you check AI models and data sources created by third parties for security risks?",
+      "recommendation": "1. Establish a Vetting Checklist: Create a mandatory checklist for evaluating all third-party models and data sources. This checklist should assess the reputation of the source, known security vulnerabilities, the data used for training, and the permissiveness of its license.\n\n2. Document Provenance: Maintain a clear record for every external component used, documenting where it came from, its version, and the date it was vetted.\n\n3. Integrate into Approval Workflow: The vetting process must be a formal, non-negotiable step in the approval workflow before any third-party model or dataset can be used in a project.",
+      "impact": "Using unvetted third-party models can unknowingly introduce security backdoors, malicious code, or data poisoning vulnerabilities, compromising the entire AI system from its foundation."
+    },
+    {
+      "id": 15,
+      "tier": "Operational",
+      "category": "Model Security and Integrity",
+      "question": "Do you protect against prompt injection through controls like clear delimiters and instructions with all user input?",
+      "recommendation": "1. Systematize Prompt Engineering: Defenses like using clear delimiters and placing instructions after user input must be a mandatory, standardized practice for all prompts. These secure prompt templates should be stored centrally and used by all developers.\n\n2. Implement an Input/Output Filtering Layer: Add a separate, automated security layer that uses a second, simpler model to classify incoming prompts for potential attacks. This layer should also scan the AI's final output to detect if any of the model's core instructions have been leaked in its response.\n\n3. Conduct Continuous Red Teaming: Regularly and automatically test the defenses using a library of known prompt injection attacks. This ensures the controls remain effective as new attack techniques are discovered.",
+      "impact": "Without protection against prompt injection, an attacker can hijack the AI's core instructions to bypass its safety controls, reveal confidential information, or trick it into performing unauthorized actions."
+    },
+    {
+      "id": 16,
+      "tier": "Operational",
+      "category": "Secure Deployment and Access Controls",
+      "question": "Do you use role-based access (e.g. only authorized staff can change settings in the AI)?",
+      "recommendation": "1. Define and Document Roles: Create a formal document or matrix that defines the specific roles for AI system access (e.g., AI Administrator, AI Developer, Business User). For each role, the specific permissions and what they are allowed to do must be clearly listed.\n\n2. Establish a Formal Access Granting Process: Access must be granted through a formal, auditable request process. The process should require a user's manager to request a specific, predefined role for them based on their job duties.\n\n3. Integrate with HR Processes: The role assignments must be reviewed as part of regular user access reviews and be integrated with HR processes, ensuring that access is revoked or changed promptly when an employee changes roles or leaves the company.",
+      "impact": "Without role-based access, employees can easily gain excessive permissions, leading to unauthorized changes, accidental data leaks, or malicious tampering with the AI's behavior."
+    },
+    {
+      "id": 17,
+      "tier": "Operational",
+      "category": "Secure Deployment and Access Controls",
+      "question": "Are APIs and other system integrations secured with authentication (verifying identity)?",
+      "recommendation": "1. Establish a Mandatory Policy: There must be a formal security policy that explicitly requires all APIs and system integrations to use a strong, approved authentication method.\n\n2. Define Approved Standards: The policy should specify the approved authentication standards (e.g., OAuth 2.0, API Keys) to ensure consistent and secure implementation across all projects.\n\n3. Implement Secure Credential Management: There must be a formal process for securely issuing, storing, and rotating API credentials using a dedicated secrets management system, with a strict prohibition against hardcoding secrets in code.",
+      "impact": "Without authentication, your APIs are public doorways that allow any anonymous attacker to freely access, steal, or manipulate the sensitive data and core functions of your systems."
+    },
+    {
+      "id": 18,
+      "tier": "Operational",
+      "category": "Secure Deployment and Access Controls",
+      "question": "Have you sandboxed the AI environments (isolated spaces) to prevent spread if hacked?",
+      "recommendation": "1. Establish a Formal Policy: The organization must have a documented security policy that explicitly requires AI systems to be deployed in environments that are logically isolated from the core corporate network.\n\n2. Provide Standardized Secure Environments: IT must provide developers with pre-configured, secure \"sandbox\" templates (e.g., specific container configurations or cloud VPCs with strict firewall rules) to make it easy to deploy AI systems in an isolated manner.\n\n3. Integrate into the Deployment Process: The use of an approved, sandboxed environment must be a mandatory, non-negotiable checkpoint in the pre-deployment checklist before any AI application is allowed to go live.\n",
+      "impact": "Without sandboxing, a single breach of the AI environment can allow an attacker to move across the network and compromise the entire organization's critical systems and data."
+    },
+    {
+      "id": 19,
+      "tier": "Operational",
+      "category": "Secure Deployment and Access Controls",
+      "question": "Do you have controls to prevent unauthorized changes to your AI model and its code after its deployed?",
+      "recommendation": "1. Establish a Formal Change Control Policy: There must be a documented policy that explicitly prohibits direct, unapproved changes to production AI models and code.\n\n2. Define and Enforce Least Privilege: The policy must enforce the principle of least privilege, ensuring that only a minimal, authorized set of personnel have the permissions to deploy or modify production systems.\n\n3. Mandate a Formal Review Process: All changes must go through a formal, auditable change management process that requires peer review and management approval before being deployed.\n",
+      "impact": "Without change controls, a malicious actor or a simple mistake can introduce a backdoor, corrupt the model's integrity, or cause a critical system failure."
+    },
+    {
+      "id": 20,
+      "tier": "Operational",
+      "category": "Behavioral Guardrails",
+      "question": "Have you implemented specific safety rules to control your AI's behavior (e.g. making it refuse to generate harmful content or answer off-topic questions)?",
+      "recommendation": "1. Formalize the Guardrails: The safety rules must be formally documented within the system prompt or configuration for every AI application.\n\n2. Define Scope and Persona: The rules must clearly define the AI's intended purpose, what topics it is forbidden to discuss, and the specific tone of voice it must use to align with the company's brand.\n\n3. Integrate into Development Lifecycle: The creation and review of these safety rules must be a mandatory, non-negotiable step in the development and deployment checklist for any new AI application.",
+      "impact": "Without defined safety rules, the AI can be easily manipulated to generate harmful, brand-damaging content or perform actions outside its intended scope."
+    },
+    {
+      "id": 21,
+      "tier": "Operational",
+      "category": "Agent and Tool Security",
+      "question": "Do you restrict the tools and permissions your AI has (e.g. ensuring a chatbot cannot access internal databases or send emails on its own)?",
+      "recommendation": "1. Establish a Formal Policy: There must be a documented security policy that explicitly states all AI agents must be granted the absolute minimum tools and permissions required to perform their specific, approved function.\n\n2. Define Permissions at the Design Stage: The specific tools, APIs, and data an AI can access must be formally defined and documented during the initial design and approval phase, not added on an ad-hoc basis later.\n\n3. Mandate Formal Approval: Any request to grant a new tool or permission to a production AI agent must go through a formal, auditable change management process that requires a clear business justification and sign-off from a designated authority.",
+      "impact": "Without restricting its permissions, a compromised AI agent becomes a powerful internal tool for an attacker, allowing them to steal data, disrupt systems, and cause widespread damage far beyond the AI's intended purpose."
+    },
+    {
+      "id": 22,
+      "tier": "Operational",
+      "category": "Performance monitoring",
+      "question": "Do you have a system to monitor your AI's performance and behavior in production to ensure it is still operating as intended (e.g. goal drift)?",
+      "recommendation": "1. Implement Automated Monitoring and Alerting: The system must automatically track key performance and behavior metrics in real-time. It should have predefined thresholds that trigger automated alerts to the appropriate teams when a metric deviates from the expected norm.\n\n2. Define Comprehensive Metrics: Monitoring should go beyond simple system health (like CPU usage). It must include AI-specific metrics that track model accuracy, data drift (changes in input data), concept drift (changes in relationships within the data), and fairness or bias indicators.\n\n3. Establish a Formal Review Process: There must be a documented process for regularly reviewing the monitoring dashboards (e.g., weekly). A formal incident response procedure should be triggered when an alert indicates a significant performance or behavioral issue.\n",
+      "impact": "Without monitoring, a well-performing AI can silently degrade over time, leading to inaccurate results, emerging biases, and critical security vulnerabilities going completely unnoticed."
+    },
+    {
+      "id": 23,
+      "tier": "Operational",
+      "category": "Inference Security",
+      "question": "If your AI makes a surprising or bad decision, do you have a way to understand why it happened?",
+      "recommendation": "1. Implement Standardized Explainability Tools: The organization must adopt and integrate standard XAI frameworks (like SHAP, LIME, or integrated cloud tools) into its MLOps pipeline. This provides data scientists and auditors with a consistent toolkit for investigating model behavior.\n\n2. Establish a Formal Investigation Process: There must be a documented incident response procedure specifically for \"unexpected model behavior.\" This plan should define what triggers an investigation, who is responsible, what tools to use, and how the findings must be documented and shared.\n\n3. Conduct Proactive Audits: The organization should move beyond just reacting to bad decisions. It should proactively and regularly audit a sample of the AI's decisions to ensure its reasoning aligns with business logic, fairness principles, and ethical guidelines.",
+      "impact": "Without a way to understand the AI's decisions, the organization is blind to the root cause of its failures, leaving it unable to fix critical biases, security flaws, or performance issues."
+    },
+    {
+      "id": 24,
+      "tier": "Advanced",
+      "category": "Monitoring and Incident Response",
+      "question": "Do you monitor AI in real-time (e.g., logs for suspicious prompts) with automated alerts?",
+      "recommendation": "1. Integrate with a Central Security System: Real-time AI logs and alerts must be fed directly into a central Security Information and Event Management (SIEM) system, allowing security analysts to correlate AI events with other network activity.\n\n2. Develop AI-Specific Detection Rules: The system must be configured with specific, tuned rules to detect known AI attack patterns, such as multiple failed prompt injection attempts, unusual resource consumption, or patterns indicative of data extraction.\n\n3. Create Actionable Alerting Playbooks: Every automated alert must be actionable. Each alert type should be linked to a documented incident response playbook that gives the security team clear, step-by-step instructions for investigation and containment.",
+      "impact": "Without real-time monitoring and alerts, an active attack on the AI system can go completely undetected, allowing an adversary ample time to steal data, corrupt the model, or compromise the entire environment."
+    },
+    {
+      "id": 25,
+      "tier": "Advanced",
+      "category": "Monitoring and Incident Response",
+      "question": "Do you have a documented plan to respond to AI-specific incidents, such as model hijacking, data poisioning, or the generation of harmful content?",
+      "recommendation": "1. Develop Detailed Playbooks: The plan must include specific, step-by-step playbooks for each type of AI incident (e.g., a \"Prompt Injection Playbook,\" a \"Model Poisoning Playbook\"). These playbooks should define clear actions for containment, such as taking a model offline, rolling back to a previous version, or blocking a malicious user.\n\n2. Define a Specialized Team: The plan should formally designate an AI Incident Response Team (AI-IRT) that includes not just security personnel, but also data scientists, ML engineers, and legal counsel who understand the unique aspects of AI systems.\n\n3. Conduct Regular Drills: The plan's effectiveness must be tested through regular tabletop exercises and simulations of AI-specific attacks. This ensures the team is prepared and that the plan works as intended under pressure.",
+      "impact": "Without an AI-specific incident response plan, an organization will be unprepared to contain and recover from an attack, leading to prolonged downtime, greater data loss, and severe reputational damage."
+    },
+    {
+      "id": 26,
+      "tier": "Advanced",
+      "category": "Adversarial Testing",
+      "question": "Do you perform penetration tests where security experts actively try to attack your AI, for example, by attempting to hijack its instructions (prompt injection) or trick it into leaking sensitive data",
+      "recommendation": "1. Integrate into the Development Lifecycle: Penetration tests should not be a one-time event before launch. They must be scheduled regularly (e.g., annually) and automatically triggered by any major changes to the AI model or the application's architecture.\n\n2. Adopt a Formal Threat Framework: The tests must be based on a formal AI threat model and systematically cover a wide range of attack vectors defined in an industry framework, such as the MITRE ATLAS™ or OWASP Top 10 for LLMs.\n\n3. Create an Actionable Remediation Process: The findings from each test must be formally tracked, prioritized based on risk, and assigned to development teams with clear deadlines for remediation, ensuring that discovered vulnerabilities are verifiably fixed.",
+      "impact": "Without penetration testing, critical vulnerabilities will remain undiscovered and unpatched, leaving the AI system exposed to real-world attacks that can lead to a significant data breach or system compromise."
+    },
+    {
+      "id": 27,
+      "tier": "Advanced",
+      "category": "Output Security",
+      "question": "Do you have a final check to scan the AI's responses for harmful content or accidental data leaks before they are shown to the user?",
+      "recommendation": "1. Automate and Integrate the Scanning: The final check must be a fully automated, low-latency step that is programmatically called before any AI response is sent to a user. This check should scan for multiple issues, including known toxic phrases, patterns of sensitive data (like credit card or national ID numbers), and keywords from the AI's confidential system prompt.\n\n2. Establish a Feedback Loop: The system must log every instance where it blocks a response. These logs should be regularly reviewed to identify patterns, which are then used to fine-tune both the output filter and the AI's core safety rules to prevent similar issues in the future.\n\n3. Create a Formal Incident Response Process: When the scanner blocks a critical issue (like a major data leak), it must trigger an automated, high-priority alert to the security team, initiating a formal incident response process to investigate the root cause immediately.",
+      "impact": "Without a final check, the AI can inadvertently leak sensitive customer data or generate brand-damaging, toxic content, exposing the organization to significant legal liability and public backlash."
+    },
+    {
+      "id": 28,
+      "tier": "Advanced",
+      "category": "Input Security",
+      "question": "Do you have a content moderation system that scans user inputs for harmful language and malicious code?",
+      "recommendation": "1. Automate and Integrate: The moderation system must be a fully automated, programmatic call that scans every user input before it is processed by the AI. It should be integrated directly into the application's data flow, not a separate, manual process.\n\n2. Use Multi-Layered Detection: The system should use a combination of techniques for maximum effectiveness. This includes blocklists for known-bad words, pattern matching (regex) for code signatures, and a secondary AI model specifically trained to classify the user's intent as malicious or benign.\n\n3. Establish a Feedback Loop and Alerting: The system must log all blocked inputs and generate real-time alerts for repeated or severe attempts. These logs should be regularly reviewed to tune the filters and identify new attack patterns.",
+      "impact": "Undetected rogue actions could lead to resource abuse, malicious outputs, or system instability, causing operational costs and security risks."
+    },
+    {
+      "id": 29,
+      "tier": "Advanced",
+      "category": "Evasion Testing",
+      "question": "Do you test if your AI's safety rules can be bypassed with prompts written in other languages?",
+      "recommendation": "1. Systematize Language Coverage: The testing process must cover a comprehensive and prioritized list of languages, not just one or two. This list should be based on the organization's user demographics and the languages most commonly used in emerging attack techniques.\n\n2. Automate Red Teaming: The organization should use automated red teaming tools that can generate and test a wide variety of known \"jailbreak\" prompts across the entire set of target languages. This provides broader and more consistent coverage than manual testing.\n\n3. Integrate into the MLOps Pipeline: Multilingual safety testing must be an automated, mandatory step in the pre-deployment pipeline. A model that fails these tests should be automatically blocked from release until its safety guardrails are verifiably improved.\n",
+      "impact": "An attacker can use a less common language to easily bypass safety controls, tricking the AI into generating harmful, forbidden, or malicious content that it would normally block in the default language."
+    },
+    {
+      "id": 30,
+      "tier": "Advanced",
+      "category": "Supply Chain Security",
+      "question": "Do you document the key components of your AI systems (e.g. AI Bill of Materials), such as the specific foundation model and the major datasets used for training?",
+      "recommendation": "1. Automate AIBOM Generation: The AI Bill of Materials (AIBOM) must be generated automatically as a standard artifact within the MLOps pipeline every time a model is built or updated. This ensures the documentation is always accurate and current.\n\n2. Ensure Comprehensive Detail: The AIBOM must be detailed, including not just the model name, but its specific version, license, upstream provider, and a cryptographic hash to verify its integrity. It should also include datasheets for all major training datasets, detailing their origin, scope, and known limitations.\n\n3. Integrate with Security Scanning: The AIBOM must be integrated with vulnerability management tools. This allows for continuous, automated scanning of all listed components, so the security team is immediately alerted if a new vulnerability is discovered in a model or library being used.",
+      "impact": "Without documenting the key components of your AI, you will be blind to critical supply chain vulnerabilities, leaving your systems exposed to attack long after a flaw is discovered."
+    }
+  ]
+}

@@ -9,7 +9,7 @@ import type {
 
 export const TIERS: Tier[] = ["Foundational", "Operational", "Advanced"];
 
-export const SCORE_OPTIONS: Score[] = [0, 1, 2, 3];
+export const SCORE_OPTIONS: Score[] = [3, 2, 1, 0];
 
 export function average(values: number[]): number | null {
   if (values.length === 0) return null;

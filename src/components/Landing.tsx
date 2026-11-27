@@ -4,6 +4,7 @@ interface LandingProps {
   onStart: () => void;
   onContinue: () => void;
   onViewReport: () => void;
+  onOpenPrivacy: () => void;
   canViewReport: boolean;
 }
 
@@ -13,6 +14,7 @@ export function Landing({
   onStart,
   onContinue,
   onViewReport,
+  onOpenPrivacy,
   canViewReport,
 }: LandingProps) {
   return (
@@ -46,6 +48,19 @@ export function Landing({
           </button>
         )}
       </div>
+      <p className="privacy-line">
+        Your progress is saved in this browser.{" "}
+        <a
+          href="#privacy"
+          className="privacy-link"
+          onClick={(event) => {
+            event.preventDefault();
+            onOpenPrivacy();
+          }}
+        >
+          Privacy
+        </a>
+      </p>
       <div className="hero-meta">
         <span>Beta {version}</span>
         <span>30 questions · 0–3 scoring</span>

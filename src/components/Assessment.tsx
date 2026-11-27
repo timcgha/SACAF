@@ -204,7 +204,7 @@ export function Assessment({
               <textarea
                 id={`notes-${question.id}`}
                 value={answer.notes}
-                placeholder="Capture context, owners, or evidence…"
+                placeholder="Briefly describe the control. Use role titles and leave out names, credentials, and confidential evidence."
                 onChange={(e) => onNotes(question.id, e.target.value)}
               />
             )}

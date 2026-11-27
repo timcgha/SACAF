@@ -1019,6 +1019,93 @@ h3,
   color: var(--ink-soft);
 }
 
+.benchmark-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -0.15rem;
+  padding: 0 0.15rem;
+}
+
+.benchmark-table {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.benchmark-table th,
+.benchmark-table td {
+  padding: 0.7rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.benchmark-table thead th {
+  background: #152836;
+  color: #f5f8fa;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.benchmark-table thead th:first-child {
+  border-radius: 10px 0 0 0;
+}
+
+.benchmark-table thead th:last-child {
+  border-radius: 0 10px 0 0;
+}
+
+.benchmark-table tbody th {
+  font-weight: 600;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.benchmark-table tbody tr.is-overall th,
+.benchmark-table tbody tr.is-overall td {
+  font-weight: 700;
+  background: rgba(236, 242, 247, 0.85);
+}
+
+.benchmark-table .col-yours {
+  color: var(--teal);
+  font-weight: 700;
+  background: rgba(11, 63, 58, 0.06);
+}
+
+.benchmark-table .col-saudi {
+  color: #1f6b4a;
+  background: rgba(31, 107, 74, 0.08);
+}
+
+.benchmark-table .col-global {
+  color: #1d4f91;
+  background: rgba(29, 79, 145, 0.08);
+}
+
+.benchmark-table .col-delta {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.benchmark-table .col-delta.is-up {
+  color: #1f6b4a;
+}
+
+.benchmark-table .col-delta.is-down {
+  color: #9b3d2e;
+}
+
+.benchmark-table .col-delta.is-flat {
+  color: var(--muted);
+  font-weight: 500;
+}
+
 .rec-list {
   display: grid;
   gap: 1rem;

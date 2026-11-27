@@ -12,6 +12,8 @@ import {
   tierAverage,
   tierDescription,
 } from "../lib/scoring";
+import { BenchmarkTable } from "./BenchmarkTable";
+
 interface ReportProps {
   data: SacafData;
   answers: Answers;
@@ -102,6 +104,8 @@ export function Report({ data, answers, onEditAnswers, onReset }: ReportProps) {
           </ul>
         </section>
       </div>
+
+      <BenchmarkTable data={data} answers={answers} />
 
       <section className="section-block" aria-labelledby="category-scores">
         <h2 id="category-scores">Category averages</h2>

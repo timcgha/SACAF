@@ -1,6 +1,11 @@
 import { jsPDF } from "jspdf";
 import type { Answers, SacafData } from "../types";
 import {
+  BENCHMARK_SOURCE,
+  PEER_BENCHMARKS,
+  deltaLabel,
+} from "./benchmarks";
+import {
   TIERS,
   categoriesInOrder,
   categoryAverage,
@@ -82,6 +87,62 @@ export function downloadSacafReport(data: SacafData, answers: Answers): void {
     y = wrap(doc, maturity.description.replace(/\n+/g, " "), margin, y, contentWidth, 5);
     y += 6;
   }
+
+  y = ensureSpace(doc, y, 48);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(13);
+  doc.setTextColor(19, 32, 40);
+  doc.text("Peer benchmarks", margin, y);
+  y += 5;
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.setTextColor(92, 113, 124);
+  y = wrap(doc, BENCHMARK_SOURCE, margin, y, contentWidth, 4);
+  y += 3;
+
+  const colX = [
+    margin,
+    margin + 38,
+    margin + 62,
+    margin + 86,
+    margin + 112,
+    margin + 138,
+  ];
+  const headers = ["Measure", "Yours", "Saudi", "Global", "vs Saudi", "vs Global"];
+  doc.setFillColor(19, 40, 56);
+  doc.rect(margin, y, contentWidth, 7, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(8);
+  headers.forEach((header, i) => doc.text(header, colX[i] + 1, y + 4.8));
+  y += 7;
+
+  for (const row of PEER_BENCHMARKS) {
+    const yours =
+      row.measure === "Overall"
+        ? overall
+        : tierAverage(row.measure, data.questions, answers);
+    const values = [
+      row.measure,
+      formatScore(yours),
+      row.saudi.toFixed(2),
+      row.global.toFixed(2),
+      deltaLabel(yours, row.saudi),
+      deltaLabel(yours, row.global),
+    ];
+    if (row.measure === "Overall") {
+      doc.setFillColor(236, 242, 247);
+      doc.rect(margin, y, contentWidth, 7, "F");
+      doc.setFont("helvetica", "bold");
+    } else {
+      doc.setFont("helvetica", "normal");
+    }
+    doc.setTextColor(19, 32, 40);
+    doc.setFontSize(8);
+    values.forEach((value, i) => doc.text(value, colX[i] + 1, y + 4.8));
+    y += 7;
+  }
+  y += 4;
 
   y = ensureSpace(doc, y, 40);
   doc.setFont("helvetica", "bold");

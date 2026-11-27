@@ -17,7 +17,7 @@ export const PEER_BENCHMARKS: BenchmarkRow[] = [
 ];
 
 export const BENCHMARK_SOURCE =
-  "Saudi Arabia and global private sector peer benchmarks · Beta 0.6";
+  "Compared with Saudi Private Sector and Global Private Sector peers · Beta 0.6";
 
 export function deltaLabel(yours: number | null, peer: number): string {
   if (yours === null) return "—";

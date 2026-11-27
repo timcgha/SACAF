@@ -63,35 +63,6 @@ export function downloadSacafReport(data: SacafData, answers: Answers): void {
   doc.setTextColor(19, 32, 40);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(14);
-  doc.text("Executive summary", margin, y);
-  y += 8;
-
-  doc.setFillColor(243, 247, 246);
-  doc.roundedRect(margin, y, contentWidth, 28, 3, 3, "F");
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(92, 113, 124);
-  doc.text("Overall maturity score", margin + 4, y + 8);
-  doc.setTextColor(11, 63, 58);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(22);
-  doc.text(formatScore(overall), margin + 4, y + 18);
-  doc.setFontSize(11);
-  doc.text(maturity ? `${maturity.label} stage` : "", margin + 42, y + 17);
-  y += 36;
-
-  if (maturity) {
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
-    doc.setTextColor(58, 77, 87);
-    y = wrap(doc, maturity.description.replace(/\n+/g, " "), margin, y, contentWidth, 5);
-    y += 6;
-  }
-
-  y = ensureSpace(doc, y, 48);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(13);
-  doc.setTextColor(19, 32, 40);
   doc.text("Peer benchmarks", margin, y);
   y += 5;
   doc.setFont("helvetica", "normal");
@@ -102,20 +73,30 @@ export function downloadSacafReport(data: SacafData, answers: Answers): void {
 
   const colX = [
     margin,
-    margin + 38,
-    margin + 62,
-    margin + 86,
-    margin + 112,
-    margin + 138,
+    margin + 34,
+    margin + 54,
+    margin + 88,
+    margin + 124,
+    margin + 150,
   ];
-  const headers = ["Measure", "Yours", "Saudi", "Global", "vs Saudi", "vs Global"];
+  const headers = [
+    "Measure",
+    "Yours",
+    "Saudi Private Sector",
+    "Global Private Sector",
+    "vs SA",
+    "vs GL",
+  ];
   doc.setFillColor(19, 40, 56);
-  doc.rect(margin, y, contentWidth, 7, "F");
+  doc.rect(margin, y, contentWidth, 9, "F");
   doc.setTextColor(255, 255, 255);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(8);
-  headers.forEach((header, i) => doc.text(header, colX[i] + 1, y + 4.8));
-  y += 7;
+  doc.setFontSize(6.5);
+  headers.forEach((header, i) => {
+    const lines = doc.splitTextToSize(header, i === 2 || i === 3 ? 32 : 22) as string[];
+    doc.text(lines, colX[i] + 1, y + (lines.length > 1 ? 3.2 : 5.5));
+  });
+  y += 9;
 
   for (const row of PEER_BENCHMARKS) {
     const yours =
@@ -142,7 +123,36 @@ export function downloadSacafReport(data: SacafData, answers: Answers): void {
     values.forEach((value, i) => doc.text(value, colX[i] + 1, y + 4.8));
     y += 7;
   }
-  y += 4;
+  y += 6;
+
+  y = ensureSpace(doc, y, 40);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(14);
+  doc.setTextColor(19, 32, 40);
+  doc.text("Executive summary", margin, y);
+  y += 8;
+
+  doc.setFillColor(243, 247, 246);
+  doc.roundedRect(margin, y, contentWidth, 28, 3, 3, "F");
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(92, 113, 124);
+  doc.text("Overall maturity score", margin + 4, y + 8);
+  doc.setTextColor(11, 63, 58);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(22);
+  doc.text(formatScore(overall), margin + 4, y + 18);
+  doc.setFontSize(11);
+  doc.text(maturity ? `${maturity.label} stage` : "", margin + 42, y + 17);
+  y += 36;
+
+  if (maturity) {
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(58, 77, 87);
+    y = wrap(doc, maturity.description.replace(/\n+/g, " "), margin, y, contentWidth, 5);
+    y += 6;
+  }
 
   y = ensureSpace(doc, y, 40);
   doc.setFont("helvetica", "bold");

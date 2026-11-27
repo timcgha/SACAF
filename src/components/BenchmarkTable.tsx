@@ -24,8 +24,8 @@ export function BenchmarkTable({ data, answers }: BenchmarkTableProps) {
             <tr>
               <th scope="col">Measure</th>
               <th scope="col">Your score</th>
-              <th scope="col">Saudi mean</th>
-              <th scope="col">Global mean</th>
+              <th scope="col">Saudi Private Sector</th>
+              <th scope="col">Global Private Sector</th>
               <th scope="col">vs Saudi</th>
               <th scope="col">vs Global</th>
             </tr>

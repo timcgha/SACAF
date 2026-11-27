@@ -66,6 +66,8 @@ export function Report({ data, answers, onEditAnswers, onReset }: ReportProps) {
         </div>
       </header>
 
+      <BenchmarkTable data={data} answers={answers} />
+
       <div className="scoreboard">
         <section className="score-card overall" aria-labelledby="overall-score">
           <p className="score-eyebrow" id="overall-score">
@@ -104,8 +106,6 @@ export function Report({ data, answers, onEditAnswers, onReset }: ReportProps) {
           </ul>
         </section>
       </div>
-
-      <BenchmarkTable data={data} answers={answers} />
 
       <section className="section-block" aria-labelledby="category-scores">
         <h2 id="category-scores">Category averages</h2>

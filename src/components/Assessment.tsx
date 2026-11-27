@@ -1,10 +1,11 @@
 import { useEffect, useId, useMemo, useState } from "react";
-import type { Answers, Question, SacafData, Score } from "../types";
+import type { Answers, Question, SacafData, Score, Tier } from "../types";
 import {
   SCORE_OPTIONS,
   TIERS,
   answeredCount,
   isComplete,
+  scoredValues,
 } from "../lib/scoring";
 
 interface AssessmentProps {
@@ -31,8 +32,9 @@ export function Assessment({
   const answer = answers[question.id] ?? { score: null, notes: "" };
   const done = answeredCount(questions, answers);
   const complete = isComplete(questions, answers);
-  const progress = (done / questions.length) * 100;
+  const progress = Math.round((done / questions.length) * 100);
   const [navOpen, setNavOpen] = useState(false);
+  const [notesOpen, setNotesOpen] = useState(Boolean(answer.notes));
   const drawerTitleId = useId();
 
   const navGroups = useMemo(() => {
@@ -42,10 +44,24 @@ export function Assessment({
     }));
   }, [questions]);
 
+  const tierProgress = useMemo(() => {
+    return TIERS.map((tier) => {
+      const items = questions.filter((q) => q.tier === tier);
+      const answered = scoredValues(items, answers).length;
+      return {
+        tier,
+        total: items.length,
+        answered,
+        percent: items.length ? Math.round((answered / items.length) * 100) : 0,
+        current: question.tier === tier,
+      };
+    });
+  }, [questions, answers, question.tier]);
+
   useEffect(() => {
     setNavOpen(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [index]);
+    setNotesOpen(Boolean(answers[questions[index]?.id]?.notes));
+  }, [index, answers, questions]);
 
   useEffect(() => {
     if (!navOpen) return;
@@ -67,27 +83,49 @@ export function Assessment({
   }
 
   return (
-    <div className="assessment-layout">
+    <div className="assessment-shell">
+      <aside className="tier-rail no-print" aria-label="Section progress">
+        <div className="tier-rail-overall">
+          <span className="tier-rail-percent">{progress}%</span>
+          <span className="tier-rail-caption">complete</span>
+        </div>
+        <div className="tier-rail-list">
+          {tierProgress.map((item) => (
+            <div
+              key={item.tier}
+              className={`tier-rail-item${item.current ? " is-current" : ""}`}
+              aria-current={item.current ? "step" : undefined}
+            >
+              <span className="tier-rail-name">{shortTier(item.tier)}</span>
+              <div
+                className="tier-rail-bar"
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={item.percent}
+                aria-label={`${item.tier} progress`}
+              >
+                <span style={{ height: `${item.percent}%` }} />
+              </div>
+              <span className="tier-rail-meta">{item.percent}%</span>
+            </div>
+          ))}
+        </div>
+        <p className="tier-rail-current">
+          <strong>{question.tier}</strong>
+        </p>
+      </aside>
+
       <div className="assessment-main">
-        <div className="progress-block">
-          <div className="progress-row">
+        <div className="assess-toolbar">
+          <div className="assess-toolbar-copy">
             <span>
-              Question {index + 1} of {questions.length}
+              Q{index + 1}/{questions.length}
             </span>
-            <span>
-              {done} answered
-              {complete ? " · ready for report" : ""}
+            <span className="dot" aria-hidden="true">
+              ·
             </span>
-          </div>
-          <div
-            className="progress-track"
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={Math.round(progress)}
-            aria-label="Assessment progress"
-          >
-            <div className="progress-fill" style={{ width: `${progress}%` }} />
+            <span>{done} answered</span>
           </div>
           <button
             type="button"
@@ -96,7 +134,7 @@ export function Assessment({
             aria-controls="question-drawer"
             onClick={() => setNavOpen(true)}
           >
-            Jump to question
+            Jump
           </button>
         </div>
 
@@ -108,73 +146,80 @@ export function Assessment({
           </div>
           <h2 className="question-text">{question.question}</h2>
 
-          <div
-            className="score-grid"
-            role="group"
-            aria-label="Score from 0 to 3"
-          >
+          <div className="score-grid" role="group" aria-label="Score from 0 to 3">
             {SCORE_OPTIONS.map((score) => (
               <button
                 key={score}
                 type="button"
                 className="score-option"
                 aria-pressed={answer.score === score}
+                aria-label={`${score}: ${data.scoreLabels[String(score)]}`}
                 onClick={() => onScore(question.id, score)}
               >
                 <span className="num" aria-hidden="true">
                   {score}
                 </span>
-                <span className="label">{data.scoreLabels[String(score)]}</span>
+                <span className="label" aria-hidden="true">
+                  <span className="label-short">{SHORT_SCORE_LABELS[score]}</span>
+                  <span className="label-full">{data.scoreLabels[String(score)]}</span>
+                </span>
               </button>
             ))}
           </div>
 
           <div className="notes-field">
-            <label htmlFor={`notes-${question.id}`}>Org notes (optional)</label>
-            <textarea
-              id={`notes-${question.id}`}
-              value={answer.notes}
-              placeholder="Capture context, owners, or evidence for this answer…"
-              onChange={(e) => onNotes(question.id, e.target.value)}
-            />
-          </div>
-
-          <div className="nav-row">
             <button
               type="button"
-              className="secondary-btn"
-              disabled={index === 0}
-              onClick={() => onIndexChange(index - 1)}
+              className="notes-toggle"
+              aria-expanded={notesOpen}
+              onClick={() => setNotesOpen((open) => !open)}
             >
-              Previous
+              {notesOpen ? "Hide org notes" : answer.notes ? "Edit org notes" : "Add org notes"}
             </button>
-            <div className="nav-row-end">
-              {index < questions.length - 1 ? (
-                <button
-                  type="button"
-                  className="primary-btn"
-                  onClick={() => onIndexChange(index + 1)}
-                >
-                  Next
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="primary-btn"
-                  disabled={!complete}
-                  title={
-                    complete
-                      ? "Open your SACAF report"
-                      : `Answer all ${questions.length} questions to generate the report (${done} done)`
-                  }
-                  onClick={onOpenReport}
-                >
-                  Generate report
-                </button>
-              )}
-            </div>
+            {notesOpen && (
+              <textarea
+                id={`notes-${question.id}`}
+                value={answer.notes}
+                placeholder="Capture context, owners, or evidence…"
+                onChange={(e) => onNotes(question.id, e.target.value)}
+              />
+            )}
           </div>
         </article>
+
+        <div className="assess-footer no-print">
+          <button
+            type="button"
+            className="secondary-btn"
+            disabled={index === 0}
+            onClick={() => onIndexChange(index - 1)}
+          >
+            Previous
+          </button>
+          {index < questions.length - 1 ? (
+            <button
+              type="button"
+              className="primary-btn"
+              onClick={() => onIndexChange(index + 1)}
+            >
+              Next
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="primary-btn"
+              disabled={!complete}
+              title={
+                complete
+                  ? "Open your SACAF report"
+                  : `Answer all ${questions.length} questions to generate the report (${done} done)`
+              }
+              onClick={onOpenReport}
+            >
+              Generate report
+            </button>
+          )}
+        </div>
       </div>
 
       <aside className="side-nav desktop-nav no-print" aria-label="Question navigation">
@@ -277,3 +322,16 @@ function QuestionNav({
     </nav>
   );
 }
+
+function shortTier(tier: Tier): string {
+  if (tier === "Foundational") return "Found.";
+  if (tier === "Operational") return "Ops";
+  return "Adv.";
+}
+
+const SHORT_SCORE_LABELS: Record<Score, string> = {
+  0: "Not implemented",
+  1: "Planned",
+  2: "Partially done",
+  3: "Fully verified",
+};

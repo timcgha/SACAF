@@ -94,7 +94,7 @@ export default function App() {
   }
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell${view === "assessment" ? " is-assessment" : ""}`}>
       <header className="topbar">
         <button
           type="button"
@@ -105,7 +105,7 @@ export default function App() {
           <span className="brand">SACAF</span>
           <span className="version">Beta {data.version}</span>
         </button>
-        <div className="no-print" style={{ display: "flex", gap: "0.5rem" }}>
+        <div className="no-print topbar-actions">
           {view !== "assessment" && (
             <button
               type="button"
@@ -159,10 +159,12 @@ export default function App() {
         />
       )}
 
-      <footer className="footer-note">
-        Based on the Simple AI Cybersecurity Assessment Framework spreadsheet
-        (Beta {data.version}). Created for informational self-assessment use.
-      </footer>
+      {view !== "assessment" && (
+        <footer className="footer-note">
+          Based on the Simple AI Cybersecurity Assessment Framework spreadsheet
+          (Beta {data.version}). Created for informational self-assessment use.
+        </footer>
+      )}
     </div>
   );
 }

@@ -1,11 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import sacaf from "./sacaf.json";
 import type { Answers, SacafData, Score, View } from "./types";
 import { Landing } from "./components/Landing";
 import { Assessment } from "./components/Assessment";
 import { Report } from "./components/Report";
+import { Privacy } from "./components/Privacy";
 import { answeredCount, isComplete } from "./lib/scoring";
 import { clearAnswers, loadAnswers, saveAnswers } from "./lib/storage";
+import {
+  clearReturnState,
+  loadReturnState,
+  saveReturnState,
+} from "./lib/returnState";
 
 const data = sacaf as SacafData;
 
@@ -36,10 +42,23 @@ function mergeLoaded(loaded: Answers): Answers {
   return base;
 }
 
+function isPrivacyHash(): boolean {
+  return window.location.hash === "#privacy";
+}
+
 export default function App() {
-  const [view, setView] = useState<View>("home");
+  const [view, setView] = useState<View>(() =>
+    typeof window !== "undefined" && isPrivacyHash() ? "privacy" : "home",
+  );
   const [answers, setAnswers] = useState<Answers>(() => mergeLoaded(loadAnswers()));
   const [index, setIndex] = useState(0);
+  const viewRef = useRef(view);
+  const indexRef = useRef(index);
+
+  useEffect(() => {
+    viewRef.current = view;
+    indexRef.current = index;
+  }, [view, index]);
 
   useEffect(() => {
     saveAnswers(answers);
@@ -48,6 +67,31 @@ export default function App() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [view]);
+
+  useEffect(() => {
+    function restoreFromPrivacy() {
+      const ret = loadReturnState();
+      clearReturnState();
+      setIndex(ret.index);
+      setView(ret.view);
+    }
+
+    function syncFromHash() {
+      if (isPrivacyHash()) {
+        if (viewRef.current !== "privacy") {
+          saveReturnState(viewRef.current, indexRef.current);
+        }
+        setView("privacy");
+        return;
+      }
+      if (viewRef.current === "privacy") {
+        restoreFromPrivacy();
+      }
+    }
+
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
 
   const progressCount = useMemo(
     () => answeredCount(data.questions, answers),
@@ -93,20 +137,52 @@ export default function App() {
     setView("assessment");
   }
 
+  function openPrivacy() {
+    saveReturnState(view, index);
+    if (isPrivacyHash()) {
+      setView("privacy");
+    } else {
+      window.location.hash = "privacy";
+    }
+  }
+
+  function leavePrivacy() {
+    const ret = loadReturnState();
+    clearReturnState();
+    if (isPrivacyHash()) {
+      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+    }
+    setIndex(ret.index);
+    setView(ret.view);
+  }
+
+  function goHome() {
+    if (isPrivacyHash()) {
+      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+    }
+    clearReturnState();
+    setView("home");
+  }
+
   return (
-    <div className="app-shell">
+    <div className={`app-shell${view === "assessment" ? " is-assessment" : ""}`}>
       <header className="topbar">
         <button
           type="button"
           className="brand-mark"
-          onClick={() => setView("home")}
+          onClick={goHome}
           aria-label="SACAF home"
         >
-          <span className="brand">SACAF</span>
-          <span className="version">Beta {data.version}</span>
+          <span className="brand-row">
+            <span className="brand">SACAF</span>
+            <span className="version">Beta {data.version}</span>
+          </span>
+          <span className="brand-full">
+            Simple AI Cybersecurity Assessment Framework
+          </span>
         </button>
-        <div className="no-print" style={{ display: "flex", gap: "0.5rem" }}>
-          {view !== "assessment" && (
+        <div className="no-print topbar-actions">
+          {view !== "assessment" && view !== "privacy" && (
             <button
               type="button"
               className="ghost-btn"
@@ -115,7 +191,7 @@ export default function App() {
               {progressCount > 0 ? "Assessment" : "Start"}
             </button>
           )}
-          {complete && view !== "report" && (
+          {complete && view !== "report" && view !== "privacy" && (
             <button
               type="button"
               className="secondary-btn"
@@ -135,6 +211,7 @@ export default function App() {
           onStart={startFresh}
           onContinue={continueAssessment}
           onViewReport={() => setView("report")}
+          onOpenPrivacy={openPrivacy}
         />
       )}
 
@@ -159,9 +236,25 @@ export default function App() {
         />
       )}
 
-      <footer className="footer-note">
-        Based on the Simple AI Cybersecurity Assessment Framework spreadsheet
-        (Beta {data.version}). Created for informational self-assessment use.
+      {view === "privacy" && <Privacy onBack={leavePrivacy} />}
+
+      <footer className={`footer-note${view === "assessment" ? " is-compact" : ""}`}>
+        {view !== "assessment" && (
+          <span>
+            Based on the Simple AI Cybersecurity Assessment Framework spreadsheet
+            (Beta {data.version}). Created for informational self-assessment use.
+          </span>
+        )}
+        <a
+          href="#privacy"
+          className="privacy-link"
+          onClick={(event) => {
+            event.preventDefault();
+            openPrivacy();
+          }}
+        >
+          Privacy
+        </a>
       </footer>
     </div>
   );

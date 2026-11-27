@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Answers, SacafData, Tier } from "../types";
 import {
   TIERS,
@@ -11,6 +12,7 @@ import {
   tierAverage,
   tierDescription,
 } from "../lib/scoring";
+import { BenchmarkTable } from "./BenchmarkTable";
 
 interface ReportProps {
   data: SacafData;
@@ -25,6 +27,17 @@ export function Report({ data, answers, onEditAnswers, onReset }: ReportProps) {
   const gaps = recommendationsNeedingAttention(data.questions, answers);
   const mature = matureItems(data.questions, answers);
   const categories = categoriesInOrder(data.questions);
+  const [busy, setBusy] = useState(false);
+
+  async function handleDownload() {
+    setBusy(true);
+    try {
+      const { downloadSacafReport } = await import("../lib/pdfReport");
+      downloadSacafReport(data, answers);
+    } finally {
+      window.setTimeout(() => setBusy(false), 400);
+    }
+  }
 
   return (
     <div className="report">
@@ -36,8 +49,13 @@ export function Report({ data, answers, onEditAnswers, onReset }: ReportProps) {
           build an action plan for every item scored below 3.
         </p>
         <div className="hero-actions no-print">
-          <button type="button" className="primary-btn" onClick={() => window.print()}>
-            Print / save PDF
+          <button
+            type="button"
+            className="primary-btn"
+            onClick={handleDownload}
+            disabled={busy}
+          >
+            {busy ? "Preparing PDF…" : "Download PDF"}
           </button>
           <button type="button" className="secondary-btn" onClick={onEditAnswers}>
             Edit answers
@@ -48,24 +66,24 @@ export function Report({ data, answers, onEditAnswers, onReset }: ReportProps) {
         </div>
       </header>
 
+      <BenchmarkTable data={data} answers={answers} />
+
       <div className="scoreboard">
         <section className="score-card overall" aria-labelledby="overall-score">
-          <p className="muted" id="overall-score">
+          <p className="score-eyebrow" id="overall-score">
             Overall maturity score
           </p>
           <p className="score-value">{formatScore(overall)}</p>
           {maturity && (
             <>
               <p className="maturity-label">{maturity.label} stage</p>
-              <p className="muted" style={{ whiteSpace: "pre-wrap", marginTop: "0.85rem" }}>
-                {maturity.description}
-              </p>
+              <p className="maturity-copy">{maturity.description}</p>
             </>
           )}
         </section>
 
         <section className="score-card" aria-labelledby="tier-breakdown">
-          <h2 id="tier-breakdown" style={{ margin: "0 0 0.85rem", fontSize: "1.15rem" }}>
+          <h2 id="tier-breakdown" className="card-title">
             Tier breakdown
           </h2>
           <ul className="tier-list">
@@ -76,16 +94,12 @@ export function Report({ data, answers, onEditAnswers, onReset }: ReportProps) {
                 <li key={tier} className="tier-item">
                   <header>
                     <strong>{tier}</strong>
-                    <span>{formatScore(score)} / 3</span>
+                    <span className="tier-score">{formatScore(score)} / 3</span>
                   </header>
                   <div className="bar" aria-hidden="true">
                     <span style={{ width: `${((score ?? 0) / 3) * 100}%` }} />
                   </div>
-                  {desc && (
-                    <p className="muted" style={{ whiteSpace: "pre-wrap", fontSize: "0.9rem" }}>
-                      {desc}
-                    </p>
-                  )}
+                  {desc && <p className="tier-copy">{desc}</p>}
                 </li>
               );
             })}
@@ -107,7 +121,7 @@ export function Report({ data, answers, onEditAnswers, onReset }: ReportProps) {
                     <strong>{category}</strong>
                     <span className="muted"> · {tier}</span>
                   </span>
-                  <span>{formatScore(score)}</span>
+                  <span className="tier-score">{formatScore(score)}</span>
                 </header>
                 <div className="bar" aria-hidden="true">
                   <span style={{ width: `${((score ?? 0) / 3) * 100}%` }} />
@@ -139,15 +153,15 @@ export function Report({ data, answers, onEditAnswers, onReset }: ReportProps) {
               <div className="rec-grid">
                 <div>
                   <h4>Recommendation</h4>
-                  <pre>{question.recommendation}</pre>
+                  <p className="rec-body">{question.recommendation}</p>
                 </div>
                 <div>
                   <h4>Impact if not done</h4>
-                  <p>{question.impact}</p>
+                  <p className="rec-body">{question.impact}</p>
                   {notes.trim() && (
                     <>
-                      <h4 style={{ marginTop: "0.85rem" }}>Your notes</h4>
-                      <p>{notes}</p>
+                      <h4 className="notes-heading">Your notes</h4>
+                      <p className="rec-body">{notes}</p>
                     </>
                   )}
                 </div>

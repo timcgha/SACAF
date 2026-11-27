@@ -34,4 +34,9 @@ export interface Answer {
 
 export type Answers = Record<number, Answer>;
 
-export type View = "home" | "assessment" | "report";
+export type View = "home" | "assessment" | "report" | "privacy";
+
+export interface ReturnState {
+  view: Exclude<View, "privacy">;
+  index: number;
+}

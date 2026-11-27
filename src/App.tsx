@@ -102,8 +102,13 @@ export default function App() {
           onClick={() => setView("home")}
           aria-label="SACAF home"
         >
-          <span className="brand">SACAF</span>
-          <span className="version">Beta {data.version}</span>
+          <span className="brand-row">
+            <span className="brand">SACAF</span>
+            <span className="version">Beta {data.version}</span>
+          </span>
+          <span className="brand-full">
+            Simple AI Cybersecurity Assessment Framework
+          </span>
         </button>
         <div className="no-print topbar-actions">
           {view !== "assessment" && (

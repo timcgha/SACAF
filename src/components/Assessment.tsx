@@ -18,6 +18,12 @@ interface AssessmentProps {
   onOpenReport: () => void;
 }
 
+interface CategoryGroup {
+  category: string;
+  tier: Tier;
+  items: Question[];
+}
+
 export function Assessment({
   data,
   answers,
@@ -35,13 +41,22 @@ export function Assessment({
   const progress = Math.round((done / questions.length) * 100);
   const [navOpen, setNavOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(Boolean(answer.notes));
+  const [openCategories, setOpenCategories] = useState<string[]>([
+    question.category,
+  ]);
   const drawerTitleId = useId();
 
-  const navGroups = useMemo(() => {
-    return TIERS.map((tier) => ({
-      tier,
-      items: questions.filter((q) => q.tier === tier),
-    }));
+  const categoryGroups = useMemo(() => {
+    const groups: CategoryGroup[] = [];
+    for (const q of questions) {
+      const existing = groups.find((g) => g.category === q.category);
+      if (existing) {
+        existing.items.push(q);
+      } else {
+        groups.push({ category: q.category, tier: q.tier, items: [q] });
+      }
+    }
+    return groups;
   }, [questions]);
 
   const tierProgress = useMemo(() => {
@@ -61,7 +76,10 @@ export function Assessment({
   useEffect(() => {
     setNavOpen(false);
     setNotesOpen(Boolean(answers[questions[index]?.id]?.notes));
-  }, [index, answers, questions]);
+    setOpenCategories((prev) =>
+      prev.includes(question.category) ? prev : [...prev, question.category],
+    );
+  }, [index, answers, questions, question.category]);
 
   useEffect(() => {
     if (!navOpen) return;
@@ -82,12 +100,20 @@ export function Assessment({
     setNavOpen(false);
   }
 
+  function toggleCategory(category: string) {
+    setOpenCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((item) => item !== category)
+        : [...prev, category],
+    );
+  }
+
   return (
     <div className="assessment-shell">
       <aside className="tier-rail no-print" aria-label="Section progress">
         <div className="tier-rail-overall">
           <span className="tier-rail-percent">{progress}%</span>
-          <span className="tier-rail-caption">complete</span>
+          <span className="tier-rail-caption">done</span>
         </div>
         <div className="tier-rail-list">
           {tierProgress.map((item) => (
@@ -95,8 +121,9 @@ export function Assessment({
               key={item.tier}
               className={`tier-rail-item${item.current ? " is-current" : ""}`}
               aria-current={item.current ? "step" : undefined}
+              title={`${item.tier}: ${item.answered}/${item.total}`}
             >
-              <span className="tier-rail-name">{shortTier(item.tier)}</span>
+              <span className="tier-rail-name">{item.tier}</span>
               <div
                 className="tier-rail-bar"
                 role="progressbar"
@@ -105,15 +132,12 @@ export function Assessment({
                 aria-valuenow={item.percent}
                 aria-label={`${item.tier} progress`}
               >
-                <span style={{ height: `${item.percent}%` }} />
+                <span style={{ height: `${Math.max(item.percent, item.percent > 0 ? 8 : 0)}%` }} />
               </div>
               <span className="tier-rail-meta">{item.percent}%</span>
             </div>
           ))}
         </div>
-        <p className="tier-rail-current">
-          <strong>{question.tier}</strong>
-        </p>
       </aside>
 
       <div className="assessment-main">
@@ -224,10 +248,12 @@ export function Assessment({
 
       <aside className="side-nav desktop-nav no-print" aria-label="Question navigation">
         <QuestionNav
-          groups={navGroups}
+          groups={categoryGroups}
           questions={questions}
           answers={answers}
           index={index}
+          openCategories={openCategories}
+          onToggleCategory={toggleCategory}
           onSelect={goTo}
         />
       </aside>
@@ -259,10 +285,12 @@ export function Assessment({
             </div>
             <div className="drawer-body">
               <QuestionNav
-                groups={navGroups}
+                groups={categoryGroups}
                 questions={questions}
                 answers={answers}
                 index={index}
+                openCategories={openCategories}
+                onToggleCategory={toggleCategory}
                 onSelect={goTo}
               />
             </div>
@@ -274,10 +302,12 @@ export function Assessment({
 }
 
 interface QuestionNavProps {
-  groups: { tier: string; items: Question[] }[];
+  groups: CategoryGroup[];
   questions: Question[];
   answers: Answers;
   index: number;
+  openCategories: string[];
+  onToggleCategory: (category: string) => void;
   onSelect: (index: number) => void;
 }
 
@@ -286,52 +316,92 @@ function QuestionNav({
   questions,
   answers,
   index,
+  openCategories,
+  onToggleCategory,
   onSelect,
 }: QuestionNavProps) {
+  let lastTier: Tier | null = null;
+
   return (
     <nav className="question-nav">
-      {groups.map((group) => (
-        <div key={group.tier} className="nav-group">
-          <div className="tier-label">{group.tier}</div>
-          {group.items.map((q) => {
-            const i = questions.findIndex((item) => item.id === q.id);
-            const scored =
-              answers[q.id]?.score !== null && answers[q.id]?.score !== undefined;
-            return (
-              <button
-                key={q.id}
-                type="button"
-                className="nav-item"
-                aria-current={i === index ? "true" : undefined}
-                onClick={() => onSelect(i)}
-              >
-                <span className="nav-num">{q.id}</span>
-                <span className="nav-label">{q.category}</span>
-                {scored ? (
-                  <span className="nav-check" aria-label="Answered">
-                    ✓
-                  </span>
-                ) : (
-                  <span className="nav-check placeholder" aria-hidden="true" />
-                )}
-              </button>
-            );
-          })}
-        </div>
-      ))}
+      {groups.map((group) => {
+        const showTier = group.tier !== lastTier;
+        lastTier = group.tier;
+        const open = openCategories.includes(group.category);
+        const answeredInGroup = group.items.filter(
+          (q) => answers[q.id]?.score !== null && answers[q.id]?.score !== undefined,
+        ).length;
+        const panelId = `cat-${slugify(group.category)}`;
+
+        return (
+          <div key={group.category} className="nav-group">
+            {showTier && <div className="tier-label">{group.tier}</div>}
+            <button
+              type="button"
+              className={`category-toggle${open ? " is-open" : ""}`}
+              aria-expanded={open}
+              aria-controls={panelId}
+              onClick={() => onToggleCategory(group.category)}
+            >
+              <span className="category-toggle-copy">
+                <span className="category-toggle-title">{group.category}</span>
+                <span className="category-toggle-meta">
+                  {answeredInGroup}/{group.items.length}
+                </span>
+              </span>
+              <span className="category-toggle-chevron" aria-hidden="true">
+                {open ? "▾" : "▸"}
+              </span>
+            </button>
+            {open && (
+              <div id={panelId} className="category-panel">
+                {group.items.map((q) => {
+                  const i = questions.findIndex((item) => item.id === q.id);
+                  const scored =
+                    answers[q.id]?.score !== null &&
+                    answers[q.id]?.score !== undefined;
+                  return (
+                    <button
+                      key={q.id}
+                      type="button"
+                      className="nav-item"
+                      aria-current={i === index ? "true" : undefined}
+                      onClick={() => onSelect(i)}
+                    >
+                      <span className="nav-num">{q.id}</span>
+                      <span className="nav-label">{shortQuestion(q.question)}</span>
+                      {scored ? (
+                        <span className="nav-check" aria-label="Answered">
+                          ✓
+                        </span>
+                      ) : (
+                        <span className="nav-check placeholder" aria-hidden="true" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </nav>
   );
 }
 
-function shortTier(tier: Tier): string {
-  if (tier === "Foundational") return "Found.";
-  if (tier === "Operational") return "Ops";
-  return "Adv.";
+function shortQuestion(text: string): string {
+  const cleaned = text.replace(/\s+/g, " ").trim();
+  if (cleaned.length <= 72) return cleaned;
+  return `${cleaned.slice(0, 69).trimEnd()}…`;
+}
+
+function slugify(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 }
 
 const SHORT_SCORE_LABELS: Record<Score, string> = {
-  0: "Not implemented",
+  0: "Not started",
   1: "Planned",
-  2: "Partially done",
-  3: "Fully verified",
+  2: "Partial",
+  3: "Complete",
 };
